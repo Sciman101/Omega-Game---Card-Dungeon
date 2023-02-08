@@ -1,0 +1,5 @@
+res://room_test.tscn
+res://shaders/environment_normal.gdshader
+res://test.tscn
+res://Player.gd
+res://test.gd
