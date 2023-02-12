@@ -6,11 +6,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lvh8y"]
 render_priority = 0
 shader = ExtResource("2_4xs0e")
+shader_parameter/color_north = Color(0.67451, 0.67451, 0.67451, 1)
 shader_parameter/color_east = Color(0.537255, 0.537255, 0.537255, 1)
 shader_parameter/color_floor = Color(0.235294, 0.235294, 0.235294, 1)
-shader_parameter/color_north = Color(0.67451, 0.67451, 0.67451, 1)
-shader_parameter/fog_color = null
 shader_parameter/fog_scale = 1000.0
+shader_parameter/fog_color = null
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gedey"]
 size = Vector3(6, 10, 1)
@@ -18,7 +18,7 @@ size = Vector3(6, 10, 1)
 [node name="room test" instance=ExtResource("1_vax73")]
 
 [node name="Cube" parent="." index="0"]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+transform = Transform3D(0.4, 0, 0, 0, 0.1, 0, 0, 0, 0.4, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_lvh8y")
 
 [node name="Walls" type="StaticBody3D" parent="." index="1"]

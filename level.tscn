@@ -1,10 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://donwgrnpdsdif"]
+[gd_scene load_steps=8 format=3 uid="uid://donwgrnpdsdif"]
 
 [ext_resource type="PackedScene" uid="uid://dkoaga5um2oii" path="res://room_test.tscn" id="1_ekwjq"]
 [ext_resource type="Script" path="res://Player.gd" id="2_6870p"]
+[ext_resource type="Shader" path="res://shaders/texture_offset.gdshader" id="3_b8g66"]
+[ext_resource type="Texture2D" uid="uid://bmpcdg4f3ksa6" path="res://sky.jpg" id="4_1v5w4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mjbjn"]
 radius = 0.75
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_piea3"]
+render_priority = 0
+shader = ExtResource("3_b8g66")
+shader_parameter/offset = null
+shader_parameter/tex = ExtResource("4_1v5w4")
+
+[sub_resource type="QuadMesh" id="QuadMesh_3w7k6"]
 
 [node name="Level" type="Node3D"]
 
@@ -71,3 +81,8 @@ far = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_mjbjn")
+
+[node name="Background" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(300, 0, 0, 0, 200, 0, 0, 0, 100, 0, 0, -99)
+material_override = SubResource("ShaderMaterial_piea3")
+mesh = SubResource("QuadMesh_3w7k6")
