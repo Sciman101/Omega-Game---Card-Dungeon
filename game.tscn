@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cucetru8iaws0"]
+[gd_scene load_steps=5 format=3 uid="uid://cucetru8iaws0"]
 
 [ext_resource type="PackedScene" uid="uid://donwgrnpdsdif" path="res://level.tscn" id="1_ryjju"]
 [ext_resource type="Texture2D" uid="uid://ct1pce3pgqe4t" path="res://icon.svg" id="2_cnuri"]
 [ext_resource type="Script" path="res://scripts/action_buttons.gd" id="3_pa2lk"]
+[ext_resource type="Script" path="res://scripts/overworld_controls.gd" id="3_suamv"]
 
 [node name="Game" type="CanvasLayer"]
 
@@ -61,6 +62,7 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
+script = ExtResource("3_suamv")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="OverworldControls"]
 layout_mode = 2
