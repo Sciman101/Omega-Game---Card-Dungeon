@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=3 uid="uid://donwgrnpdsdif"]
+
+[ext_resource type="PackedScene" uid="uid://dkoaga5um2oii" path="res://room_test.tscn" id="1_ekwjq"]
+[ext_resource type="Script" path="res://Player.gd" id="2_6870p"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mjbjn"]
+radius = 0.75
+
+[node name="Level" type="Node3D"]
+
+[node name="Room Segments" type="Node3D" parent="."]
+
+[node name="room test" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+
+[node name="room test2" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+
+[node name="room test3" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -11)
+
+[node name="room test4" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11)
+
+[node name="room test5" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 0)
+
+[node name="room test6" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
+
+[node name="room test7" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -11)
+
+[node name="room test8" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -11)
+
+[node name="room test9" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22)
+
+[node name="room test10" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 22)
+
+[node name="room test11" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 11)
+
+[node name="room test12" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11)
+
+[node name="room test13" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 22)
+
+[node name="room test14" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 22)
+
+[node name="room test15" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 11)
+
+[node name="room test16" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 11)
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("2_6870p")
+rotation_speed = 2.0
+rotation_acceleration = 15.0
+move_speed = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+fov = 90.0
+far = 100.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_mjbjn")

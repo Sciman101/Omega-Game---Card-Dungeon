@@ -1,0 +1,158 @@
+[gd_scene load_steps=4 format=3 uid="uid://cucetru8iaws0"]
+
+[ext_resource type="PackedScene" uid="uid://donwgrnpdsdif" path="res://level.tscn" id="1_ryjju"]
+[ext_resource type="Texture2D" uid="uid://ct1pce3pgqe4t" path="res://icon.svg" id="2_cnuri"]
+[ext_resource type="Script" path="res://scripts/action_buttons.gd" id="3_pa2lk"]
+
+[node name="Game" type="CanvasLayer"]
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.435294, 0.270588, 0.329412, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 128
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/HBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(332, 224)
+render_target_update_mode = 4
+
+[node name="Level" parent="MarginContainer/HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_ryjju")]
+
+[node name="Column" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Column"]
+layout_mode = 2
+texture = ExtResource("2_cnuri")
+
+[node name="OverworldControls" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 232.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OverworldControls"]
+layout_mode = 2
+
+[node name="ActionButtons" type="GridContainer" parent="OverworldControls/HBoxContainer"]
+layout_mode = 2
+columns = 3
+script = ExtResource("3_pa2lk")
+
+[node name="turn_left" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+text = "Left"
+
+[node name="move_forwards" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+text = "Forwards"
+
+[node name="turn_right" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+text = "Right"
+
+[node name="pause" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+text = "Pause"
+
+[node name="move_backwards" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+text = "Back"
+
+[node name="interact" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 0
+text = "Interact"
+
+[node name="TextBox" type="Control" parent="OverworldControls/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="OverworldControls/HBoxContainer/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Label" type="Label" parent="OverworldControls/HBoxContainer/TextBox/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+autowrap_mode = 2
+
+[node name="Bg" type="ColorRect" parent="OverworldControls/HBoxContainer/TextBox"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="DeckButton" type="Button" parent="OverworldControls/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Deck
+(0 Cards)"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
