@@ -1,6 +1,7 @@
 extends MarginContainer
 
-@onready var textbox_label = $HBoxContainer/TextBox/MarginContainer/Label
+@onready var inventory_slots = $HBoxContainer/InventoryGrid.get_children()
+@onready var textbox_label = $HBoxContainer/TextBox/Margins/Label
 
 func present_text(text:String) -> void:
 	textbox_label.text = text

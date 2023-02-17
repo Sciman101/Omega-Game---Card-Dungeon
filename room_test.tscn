@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkoaga5um2oii"]
+[gd_scene load_steps=6 format=3 uid="uid://dkoaga5um2oii"]
 
 [ext_resource type="PackedScene" uid="uid://c2xyx676aobyu" path="res://models/room test.glb" id="1_vax73"]
 [ext_resource type="Shader" path="res://shaders/environment_normal.gdshader" id="2_4xs0e"]
@@ -15,10 +15,13 @@ shader_parameter/fog_color = null
 [sub_resource type="BoxShape3D" id="BoxShape3D_gedey"]
 size = Vector3(6, 10, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qt1jw"]
+size = Vector3(28, 1, 27)
+
 [node name="room test" instance=ExtResource("1_vax73")]
 
 [node name="Cube" parent="." index="0"]
-transform = Transform3D(0.4, 0, 0, 0, 0.1, 0, 0, 0, 0.4, 0, 0, 0)
+transform = Transform3D(0.4, 0, 0, 0, 2, 0, 0, 0, 0.4, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_lvh8y")
 
 [node name="Walls" type="StaticBody3D" parent="." index="1"]
@@ -87,3 +90,7 @@ shape = SubResource("BoxShape3D_gedey")
 [node name="CollisionShape3D12" type="CollisionShape3D" parent="Walls" index="15"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 5, 10.5)
 shape = SubResource("BoxShape3D_gedey")
+
+[node name="FLOOR" type="CollisionShape3D" parent="Walls" index="16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_qt1jw")

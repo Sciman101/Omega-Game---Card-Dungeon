@@ -1,20 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://donwgrnpdsdif"]
+[gd_scene load_steps=4 format=3 uid="uid://cagdachin8vak"]
 
 [ext_resource type="PackedScene" uid="uid://dkoaga5um2oii" path="res://room_test.tscn" id="1_ekwjq"]
-[ext_resource type="Script" path="res://Player.gd" id="2_6870p"]
-[ext_resource type="Shader" path="res://shaders/texture_offset.gdshader" id="3_b8g66"]
-[ext_resource type="Texture2D" uid="uid://bmpcdg4f3ksa6" path="res://sky.jpg" id="4_1v5w4"]
+[ext_resource type="Script" path="res://scripts/Player.gd" id="2_6870p"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mjbjn"]
 radius = 0.75
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_piea3"]
-render_priority = 0
-shader = ExtResource("3_b8g66")
-shader_parameter/offset = null
-shader_parameter/tex = ExtResource("4_1v5w4")
-
-[sub_resource type="QuadMesh" id="QuadMesh_3w7k6"]
 
 [node name="Level" type="Node3D"]
 
@@ -70,9 +60,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 11)
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("2_6870p")
-rotation_speed = 2.0
-rotation_acceleration = 15.0
-move_speed = 5.0
+rotation_speed = 1.0
+rotation_acceleration = 12.0
+move_speed = 4.0
+sprint_speed = 5.5
+gravity = 1.0
+headbob_rate = 6.0
+headbob_rate_sprint = 8.0
+headbob_amplitude = 0.2
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -81,8 +76,3 @@ far = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_mjbjn")
-
-[node name="Background" type="MeshInstance3D" parent="Player"]
-transform = Transform3D(300, 0, 0, 0, 200, 0, 0, 0, 100, 0, 0, -99)
-material_override = SubResource("ShaderMaterial_piea3")
-mesh = SubResource("QuadMesh_3w7k6")

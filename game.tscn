@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://cucetru8iaws0"]
 
-[ext_resource type="PackedScene" uid="uid://donwgrnpdsdif" path="res://level.tscn" id="1_ryjju"]
-[ext_resource type="Texture2D" uid="uid://ct1pce3pgqe4t" path="res://icon.svg" id="2_cnuri"]
-[ext_resource type="Script" path="res://scripts/action_buttons.gd" id="3_pa2lk"]
-[ext_resource type="Script" path="res://scripts/overworld_controls.gd" id="3_suamv"]
+[ext_resource type="PackedScene" uid="uid://cagdachin8vak" path="res://level.tscn" id="1_ryjju"]
+[ext_resource type="Texture2D" uid="uid://bmpcdg4f3ksa6" path="res://sky.jpg" id="2_d4m1g"]
+[ext_resource type="PackedScene" uid="uid://d2cadryr2dgt5" path="res://inventory_slot.tscn" id="2_wdcqm"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="3_x6ylu"]
 
 [node name="Game" type="CanvasLayer"]
 
@@ -26,14 +26,21 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 128
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayerView"]
-layout_mode = 2
-
-[node name="EnvironmentViewport" type="Control" parent="PlayerView/HBoxContainer"]
+[node name="EnvironmentViewport" type="Control" parent="PlayerView"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="PlayerView/HBoxContainer/EnvironmentViewport"]
+[node name="Background" type="TextureRect" parent="PlayerView/EnvironmentViewport"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_d4m1g")
+expand_mode = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PlayerView/EnvironmentViewport"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -44,23 +51,15 @@ grow_vertical = 2
 size_flags_horizontal = 3
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="PlayerView/HBoxContainer/EnvironmentViewport/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="PlayerView/EnvironmentViewport/SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(332, 224)
+size = Vector2i(464, 224)
 render_target_update_mode = 4
 
-[node name="Level" parent="PlayerView/HBoxContainer/EnvironmentViewport/SubViewportContainer/SubViewport" instance=ExtResource("1_ryjju")]
+[node name="Level" parent="PlayerView/EnvironmentViewport/SubViewportContainer/SubViewport" instance=ExtResource("1_ryjju")]
 
-[node name="Column" type="VBoxContainer" parent="PlayerView/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-
-[node name="TextureRect" type="TextureRect" parent="PlayerView/HBoxContainer/Column"]
-layout_mode = 2
-texture = ExtResource("2_cnuri")
-
-[node name="OverworldControls" type="MarginContainer" parent="."]
+[node name="HUD" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -72,96 +71,61 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
-script = ExtResource("3_suamv")
+script = ExtResource("3_x6ylu")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="OverworldControls"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
 layout_mode = 2
 
-[node name="ActionButtons" type="GridContainer" parent="OverworldControls/HBoxContainer"]
-layout_mode = 2
-columns = 3
-script = ExtResource("3_pa2lk")
-
-[node name="turn_left" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
+[node name="TextBox" type="ColorRect" parent="HUD/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 0
-text = "Left"
-
-[node name="move_forwards" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 0
-text = "Forwards"
-
-[node name="turn_right" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 0
-text = "Right"
-
-[node name="pause" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 0
-text = "Pause"
-
-[node name="move_backwards" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 0
-text = "Back"
-
-[node name="interact" type="Button" parent="OverworldControls/HBoxContainer/ActionButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 0
-text = "Interact"
-
-[node name="TextBox" type="Control" parent="OverworldControls/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="OverworldControls/HBoxContainer/TextBox"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
-
-[node name="Label" type="Label" parent="OverworldControls/HBoxContainer/TextBox/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-autowrap_mode = 2
-
-[node name="Bg" type="ColorRect" parent="OverworldControls/HBoxContainer/TextBox"]
-show_behind_parent = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="DeckButton" type="Button" parent="OverworldControls/HBoxContainer"]
+[node name="Margins" type="MarginContainer" parent="HUD/HBoxContainer/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="HUD/HBoxContainer/TextBox/Margins"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Text goes here!!! wowzer!!"
+
+[node name="InventoryGrid" type="GridContainer" parent="HUD/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_mode = 0
-text = "Deck
-(0 Cards)"
+columns = 4
+
+[node name="InventorySlot1" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
+layout_mode = 2
+
+[node name="InventorySlot4" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
+layout_mode = 2
+
+[node name="InventorySlot5" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
+layout_mode = 2
+
+[node name="InventorySlot6" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
+layout_mode = 2
+
+[node name="InventorySlot7" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
+layout_mode = 2
+
+[node name="InventorySlot8" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
+layout_mode = 2
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
