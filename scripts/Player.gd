@@ -5,17 +5,25 @@ extends CharacterBody3D
 @export var move_speed : float
 @export var sprint_speed : float
 @export var gravity : float
+@export var jump_speed : float
 
 @export var headbob_rate : float
 @export var headbob_rate_sprint : float
 @export var headbob_amplitude : float
 
 @onready var camera = $Camera3D
+@onready var ray = $InteractRay
+
+signal interact(other)
 
 var rotation_velocity : float
 var headbob_anim : float
 
-var yspeed : float
+var locked : bool
+
+func _ready():
+	Game.player = self
+	Game.lock_player()
 
 func _physics_process(delta):
 	var input_hor = Input.get_axis("left", "right")
@@ -23,7 +31,10 @@ func _physics_process(delta):
 	var sprint = Input.is_action_pressed("sprint")
 	
 	if is_on_floor():
-		velocity.y = -gravity
+		if Input.is_action_just_pressed("jump"):
+			velocity.y = jump_speed
+		else:
+			velocity.y = -gravity
 	else:
 		velocity.y -= gravity
 	
@@ -55,3 +66,11 @@ func _physics_process(delta):
 	velocity.z = move.z
 
 	move_and_slide()
+	
+	# Interact
+	if Input.is_action_just_pressed("interact"):
+		ray.force_raycast_update()
+		if ray.is_colliding():
+			var target = ray.get_collider()
+			if target.is_in_group("Interactible"):
+				interact.emit(target)

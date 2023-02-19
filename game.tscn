@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cucetru8iaws0"]
+[gd_scene load_steps=7 format=3 uid="uid://brty2hwtxpshb"]
 
-[ext_resource type="PackedScene" uid="uid://cagdachin8vak" path="res://level.tscn" id="1_ryjju"]
-[ext_resource type="Texture2D" uid="uid://bmpcdg4f3ksa6" path="res://sky.jpg" id="2_d4m1g"]
+[ext_resource type="Texture2D" uid="uid://bmpcdg4f3ksa6" path="res://textures/sky.jpg" id="1_lvkr6"]
+[ext_resource type="PackedScene" path="res://level.tscn" id="1_ryjju"]
 [ext_resource type="PackedScene" uid="uid://d2cadryr2dgt5" path="res://inventory_slot.tscn" id="2_wdcqm"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_x6ylu"]
+[ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="3_xubja"]
+[ext_resource type="Script" path="res://scripts/inventory_ui.gd" id="5_m260w"]
 
 [node name="Game" type="CanvasLayer"]
 
@@ -37,7 +39,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_d4m1g")
+texture = ExtResource("1_lvkr6")
 expand_mode = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="PlayerView/EnvironmentViewport"]
@@ -58,6 +60,30 @@ size = Vector2i(464, 224)
 render_target_update_mode = 4
 
 [node name="Level" parent="PlayerView/EnvironmentViewport/SubViewportContainer/SubViewport" instance=ExtResource("1_ryjju")]
+
+[node name="Talksprite" type="Control" parent="PlayerView/EnvironmentViewport"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PlayerView/EnvironmentViewport/Talksprite"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.490196)
+
+[node name="Talksprite" type="AnimatedSprite2D" parent="PlayerView/EnvironmentViewport/Talksprite"]
+texture_filter = 1
+position = Vector2(235, 118)
+sprite_frames = ExtResource("3_xubja")
+autoplay = "default"
 
 [node name="HUD" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -96,12 +122,13 @@ theme_override_constants/margin_bottom = 8
 [node name="Label" type="Label" parent="HUD/HBoxContainer/TextBox/Margins"]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Text goes here!!! wowzer!!"
+text = "..."
 
 [node name="InventoryGrid" type="GridContainer" parent="HUD/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 4
+script = ExtResource("5_m260w")
 
 [node name="InventorySlot1" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
 layout_mode = 2

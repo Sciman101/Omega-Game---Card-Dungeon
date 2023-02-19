@@ -1,61 +1,177 @@
-[gd_scene load_steps=4 format=3 uid="uid://cagdachin8vak"]
+[gd_scene load_steps=16 format=3]
 
-[ext_resource type="PackedScene" uid="uid://dkoaga5um2oii" path="res://room_test.tscn" id="1_ekwjq"]
-[ext_resource type="Script" path="res://scripts/Player.gd" id="2_6870p"]
+[ext_resource type="Texture2D" uid="uid://b0rt5y04gb217" path="res://textures/brick diffuse.png" id="1_05jv6"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="2_6870p"]
+[ext_resource type="PackedScene" uid="uid://brw86xdf8mp2r" path="res://house.tscn" id="2_jwrqx"]
+[ext_resource type="Material" uid="uid://dy2o74niyb474" path="res://materials/fence_mat.tres" id="3_fw7hu"]
+[ext_resource type="Script" path="res://scripts/npc.gd" id="5_asaev"]
+[ext_resource type="Texture2D" uid="uid://cwpleguyxbry7" path="res://textures/cyclops.png" id="5_q1fph"]
+[ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="6_hqf3b"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_qhfft"]
+size = Vector2(30, 70)
+orientation = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o65oo"]
+shading_mode = 0
+albedo_texture = ExtResource("1_05jv6")
+uv1_scale = Vector3(6, 14, 1)
+texture_filter = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s71nm"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pkfbi"]
+size = Vector3(30, 4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pe4al"]
+size = Vector3(58, 4, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_7cxk2"]
+material = ExtResource("3_fw7hu")
+size = Vector2(16, 4)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mjbjn"]
 radius = 0.75
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sqscq"]
+radius = 0.75
+height = 2.5
+
 [node name="Level" type="Node3D"]
 
-[node name="Room Segments" type="Node3D" parent="."]
+[node name="Environment" type="Node3D" parent="."]
 
-[node name="room test" parent="Room Segments" instance=ExtResource("1_ekwjq")]
+[node name="Floor" type="StaticBody3D" parent="Environment"]
 
-[node name="room test2" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Floor"]
+mesh = SubResource("QuadMesh_qhfft")
+surface_material_override/0 = SubResource("StandardMaterial3D_o65oo")
 
-[node name="room test3" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -11)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor"]
+shape = SubResource("BoxShape3D_s71nm")
 
-[node name="room test4" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11)
+[node name="Real Estate" type="Node3D" parent="Environment"]
 
-[node name="room test5" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 0)
+[node name="House" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
 
-[node name="room test6" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 0)
+[node name="House2" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
 
-[node name="room test7" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -11)
+[node name="House3" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -16)
 
-[node name="room test8" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -11)
+[node name="House4" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -24)
 
-[node name="room test9" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 22)
+[node name="House5" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, -24)
 
-[node name="room test10" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 22)
+[node name="House6" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, -16)
 
-[node name="room test11" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 11)
+[node name="House7" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, -8)
 
-[node name="room test12" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11)
+[node name="House8" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 0)
 
-[node name="room test13" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 22)
+[node name="House9" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 9)
 
-[node name="room test14" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 22)
+[node name="House10" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 9)
 
-[node name="room test15" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 11)
+[node name="House11" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 18)
 
-[node name="room test16" parent="Room Segments" instance=ExtResource("1_ekwjq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 11)
+[node name="House12" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 18)
+
+[node name="House13" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 26)
+
+[node name="House14" parent="Environment/Real Estate" instance=ExtResource("2_jwrqx")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 8, 0, 26)
+
+[node name="Fences" type="StaticBody3D" parent="Environment"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Fences"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -29)
+shape = SubResource("BoxShape3D_pkfbi")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Environment/Fences"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 31)
+shape = SubResource("BoxShape3D_pkfbi")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Environment/Fences"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 2, 0)
+shape = SubResource("BoxShape3D_pe4al")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Environment/Fences"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14, 2, 0)
+shape = SubResource("BoxShape3D_pe4al")
+
+[node name="Fence" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.80064, -29)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence2" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.80064, -29)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence3" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 6, 1.80064, 31)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence4" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -6, 1.80064, 31)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence5" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 14, 1.80064, 7)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence7" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 14, 1.80064, -9)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence8" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 14, 1.80064, -21)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence6" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 14, 1.80064, 23)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence9" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -14, 1.80064, -7)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence10" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -14, 1.80064, 9)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence11" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -14, 1.80064, 21)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
+
+[node name="Fence12" type="MeshInstance3D" parent="Environment/Fences"]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -14, 1.80064, -23)
+mesh = SubResource("QuadMesh_7cxk2")
+skeleton = NodePath("../..")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -65,6 +181,7 @@ rotation_acceleration = 12.0
 move_speed = 4.0
 sprint_speed = 5.5
 gravity = 1.0
+jump_speed = 15.0
 headbob_rate = 6.0
 headbob_rate_sprint = 8.0
 headbob_amplitude = 0.2
@@ -76,3 +193,23 @@ far = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_mjbjn")
+
+[node name="InteractRay" type="RayCast3D" parent="Player"]
+enabled = false
+target_position = Vector3(0, 0, -2.5)
+
+[node name="CyclopsNPC" type="StaticBody3D" parent="." groups=["Interactible", "Npc"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 9)
+script = ExtResource("5_asaev")
+talksprite = ExtResource("6_hqf3b")
+dialogue = "What's your problem?"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CyclopsNPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30968, 0)
+shape = SubResource("CapsuleShape3D_sqscq")
+
+[node name="Sprite3D" type="Sprite3D" parent="CyclopsNPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+billboard = 2
+texture_filter = 0
+texture = ExtResource("5_q1fph")

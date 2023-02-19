@@ -5,9 +5,6 @@ uniform vec3 color_north : source_color;
 uniform vec3 color_east : source_color;
 uniform vec3 color_floor : source_color;
 
-uniform float fog_scale;
-uniform vec3 fog_color : source_color;
-
 varying vec3 normal;
 void vertex() {
 	normal = NORMAL;

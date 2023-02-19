@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dy2o74niyb474"]
+
+[ext_resource type="Texture2D" uid="uid://sfj604ivtsa5" path="res://textures/fence.png" id="1_y2yt8"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.2
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("1_y2yt8")
+uv1_scale = Vector3(4, 1, 1)
+proximity_fade_distance = 50.0
+distance_fade_max_distance = 50.0
