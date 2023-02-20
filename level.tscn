@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://nlccyx0mtpdh"]
+[gd_scene load_steps=15 format=3 uid="uid://nlccyx0mtpdh"]
 
 [ext_resource type="Texture2D" uid="uid://b0rt5y04gb217" path="res://textures/brick diffuse.png" id="1_05jv6"]
 [ext_resource type="PackedScene" uid="uid://brw86xdf8mp2r" path="res://house.tscn" id="2_jwrqx"]
 [ext_resource type="Material" uid="uid://dy2o74niyb474" path="res://materials/fence_mat.tres" id="3_fw7hu"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="4_nul7i"]
+[ext_resource type="PackedScene" uid="uid://b40ygy2tnhtjx" path="res://player.tscn" id="4_qfkfe"]
 [ext_resource type="Script" path="res://scripts/npc.gd" id="5_asaev"]
 [ext_resource type="Texture2D" uid="uid://cwpleguyxbry7" path="res://textures/cyclops.png" id="5_q1fph"]
 [ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="6_hqf3b"]
@@ -30,9 +30,6 @@ size = Vector3(58, 4, 1)
 [sub_resource type="QuadMesh" id="QuadMesh_7cxk2"]
 material = ExtResource("3_fw7hu")
 size = Vector2(16, 4)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mjbjn"]
-radius = 0.75
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sqscq"]
 radius = 0.75
@@ -173,29 +170,7 @@ transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -14, 1
 mesh = SubResource("QuadMesh_7cxk2")
 skeleton = NodePath("../..")
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("4_nul7i")
-rotation_speed = 1.0
-rotation_acceleration = 12.0
-move_speed = 4.0
-sprint_speed = 5.5
-gravity = 1.0
-jump_speed = 15.0
-headbob_rate = 6.0
-headbob_rate_sprint = 8.0
-headbob_amplitude = 0.2
-
-[node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-fov = 90.0
-far = 100.0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("CapsuleShape3D_mjbjn")
-
-[node name="InteractRay" type="RayCast3D" parent="Player"]
-target_position = Vector3(0, 0, -2.5)
+[node name="Player" parent="." instance=ExtResource("4_qfkfe")]
 
 [node name="CyclopsNPC" type="StaticBody3D" parent="." groups=["Interactible", "Npc"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 9)
@@ -208,6 +183,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30968, 0)
 shape = SubResource("CapsuleShape3D_sqscq")
 
 [node name="Sprite3D" type="Sprite3D" parent="CyclopsNPC"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+billboard = 2
+texture_filter = 0
+texture = ExtResource("5_q1fph")
+
+[node name="CyclopsNPC2" type="StaticBody3D" parent="." groups=["Interactible", "Npc"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 9)
+script = ExtResource("5_asaev")
+talksprite = ExtResource("6_hqf3b")
+dialogue = "You don't look like you're from around here"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CyclopsNPC2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30968, 0)
+shape = SubResource("CapsuleShape3D_sqscq")
+
+[node name="Sprite3D" type="Sprite3D" parent="CyclopsNPC2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
 billboard = 2
 texture_filter = 0

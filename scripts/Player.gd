@@ -1,9 +1,7 @@
 extends CharacterBody3D
 
 @export var rotation_speed : float
-@export var rotation_acceleration : float
 @export var move_speed : float
-@export var sprint_speed : float
 @export var gravity : float
 @export var jump_speed : float
 
@@ -17,7 +15,7 @@ extends CharacterBody3D
 signal in_proximity_to_interactible(other)
 signal interact(other)
 
-var rotation_velocity : float
+var rotation_accum : float
 var headbob_anim : float
 
 var current_interactible
@@ -28,7 +26,6 @@ func _ready():
 func _physics_process(delta):
 	var input_hor = Input.get_axis("left", "right")
 	var input_vert = Input.get_axis("up", "down")
-	var sprint = Input.is_action_pressed("sprint")
 	
 	if is_on_floor():
 		if Input.is_action_just_pressed("jump"):
@@ -39,29 +36,20 @@ func _physics_process(delta):
 		velocity.y -= gravity
 	
 	if input_hor != 0:
-		rotation_velocity -= input_hor * delta * rotation_acceleration
+		rotate_y((rotation_speed + rotation_accum * rotation_accum) * input_hor * -delta)
+		rotation_accum = min(rotation_accum + delta * 2, 2)
 	else:
-		rotation_velocity = move_toward(rotation_velocity,0,delta * rotation_acceleration)
-	rotation_velocity = clamp(rotation_velocity,-rotation_speed,rotation_speed)
+		rotation_accum = 0
 	
 	if input_vert != 0:
-		if sprint:
-			headbob_anim += delta * headbob_rate_sprint
-		else:
-			headbob_anim += delta * headbob_rate
+		headbob_anim += delta * headbob_rate
 		if headbob_anim > PI:
 			headbob_anim -= PI
 	else:
 		headbob_anim = move_toward(headbob_anim,0,delta)
 	camera.v_offset = sin(headbob_anim) * headbob_amplitude
 	
-	rotate_y(rotation_velocity * delta * (2 if sprint else 1))
-	
-	var move
-	if sprint:
-		move = transform.basis.z * input_vert * sprint_speed
-	else:
-		move = transform.basis.z * input_vert * move_speed
+	var move = transform.basis.z * input_vert * move_speed
 	velocity.x = move.x
 	velocity.z = move.z
 

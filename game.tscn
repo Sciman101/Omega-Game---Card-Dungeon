@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://brty2hwtxpshb"]
+[gd_scene load_steps=8 format=3 uid="uid://brty2hwtxpshb"]
 
 [ext_resource type="Texture2D" uid="uid://bmpcdg4f3ksa6" path="res://textures/sky.jpg" id="1_lvkr6"]
 [ext_resource type="PackedScene" uid="uid://nlccyx0mtpdh" path="res://level.tscn" id="1_ryjju"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_x6ylu"]
 [ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="3_xubja"]
 [ext_resource type="Script" path="res://scripts/inventory_ui.gd" id="5_m260w"]
+[ext_resource type="Script" path="res://scripts/textbox.gd" id="5_t2qgf"]
 
 [node name="Game" type="CanvasLayer"]
 
@@ -112,6 +113,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0, 0, 0, 1)
+script = ExtResource("5_t2qgf")
 
 [node name="Margins" type="MarginContainer" parent="HUD/HBoxContainer/TextBox"]
 layout_mode = 1

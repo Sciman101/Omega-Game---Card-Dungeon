@@ -1,7 +1,9 @@
 extends MarginContainer
 
+const DEFAULT_TEXT = "..."
+
 @onready var inventory_slots = $HBoxContainer/InventoryGrid.get_children()
-@onready var textbox_label = $HBoxContainer/TextBox/Margins/Label
+@onready var textbox = $HBoxContainer/TextBox
 @onready var talksprite_container = $"../PlayerView/EnvironmentViewport/Talksprite"
 @onready var talksprite = $"../PlayerView/EnvironmentViewport/Talksprite/Talksprite"
 @onready var interactable_prompt = $"../PlayerView/EnvironmentViewport/IntractivePopup"
@@ -16,25 +18,15 @@ func _ready():
 	else:
 		print("Warning! No player node found!!")
 
-func present_text(text:String,text_speed:float=1) -> void:
-	textbox_label.text = text
-	if text_speed != 0:
-		textbox_label.visible_characters = 0
-		var delay = 0.05 / text_speed
-		for x in text:
-			textbox_label.visible_characters += 1
-			await get_tree().create_timer(delay).timeout
-	else:
-		textbox_label.visible_characters = -1
-
 func do_npc_dialogue(npc):
+	interactable_prompt.hide()
 	talksprite_container.visible = true
 	talksprite.sprite_frames = npc.talksprite
 	talksprite.play()
 	
 	Game.lock_player()
 	
-	await present_text(npc.dialogue)
+	await textbox.present_text(npc.dialogue)
 	talksprite.stop()
 	talksprite.frame = 0
 	
@@ -43,19 +35,20 @@ func do_npc_dialogue(npc):
 		await tree.process_frame
 	
 	talksprite_container.visible = false
-	textbox_label.text = ""
+	textbox.present_text(DEFAULT_TEXT, 0)
 	Game.unlock_player()
+	interactable_prompt.show()
 
 func _on_player_interact(thing):
 	if thing.is_in_group("Npc"):
 		do_npc_dialogue(thing)
 
 func _on_inventory_grid_on_item_selected(item, slot_number):
-	present_text("...", 0)
+	textbox.present_text(DEFAULT_TEXT, 0)
 
 func _on_inventory_grid_on_item_hovered(item, slot_number):
 	if item:
-		present_text(item.name + ":\n" + item.description, 2)
+		textbox.present_text(item.name + ":\n" + item.description)
 
 func _show_hide_interactive_prompt(other):
 	if other:
