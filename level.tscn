@@ -1,9 +1,9 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=16 format=3 uid="uid://nlccyx0mtpdh"]
 
 [ext_resource type="Texture2D" uid="uid://b0rt5y04gb217" path="res://textures/brick diffuse.png" id="1_05jv6"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="2_6870p"]
 [ext_resource type="PackedScene" uid="uid://brw86xdf8mp2r" path="res://house.tscn" id="2_jwrqx"]
 [ext_resource type="Material" uid="uid://dy2o74niyb474" path="res://materials/fence_mat.tres" id="3_fw7hu"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="4_nul7i"]
 [ext_resource type="Script" path="res://scripts/npc.gd" id="5_asaev"]
 [ext_resource type="Texture2D" uid="uid://cwpleguyxbry7" path="res://textures/cyclops.png" id="5_q1fph"]
 [ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="6_hqf3b"]
@@ -175,7 +175,7 @@ skeleton = NodePath("../..")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("2_6870p")
+script = ExtResource("4_nul7i")
 rotation_speed = 1.0
 rotation_acceleration = 12.0
 move_speed = 4.0
@@ -195,7 +195,6 @@ far = 100.0
 shape = SubResource("CapsuleShape3D_mjbjn")
 
 [node name="InteractRay" type="RayCast3D" parent="Player"]
-enabled = false
 target_position = Vector3(0, 0, -2.5)
 
 [node name="CyclopsNPC" type="StaticBody3D" parent="." groups=["Interactible", "Npc"]]

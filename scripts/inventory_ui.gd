@@ -9,19 +9,44 @@ var row_offset : int = 0
 var num_rows : int = 0
 var selected_slot = null
 
+var last_selected_slot_index := 0
+
+var viewing_inventory : bool = false
+
+signal on_item_selected(item, slot_number)
+signal on_item_hovered(item, slot_number)
+
 func _ready():
 	update_inventoty_slots()
-	select_slot(0)
+	on_item_selected.connect(_on_done_browsing)
 
-func _process(delta):
-	if Input.is_action_just_pressed("right"):
-		move_selection(1,0)
-	if Input.is_action_just_pressed("left"):
-		move_selection(-1,0)
-	if Input.is_action_just_pressed("down"):
-		move_selection(0,1)
-	if Input.is_action_just_pressed("up"):
-		move_selection(0,-1)
+# Navigate
+func _input(event):
+	if not viewing_inventory:
+		if not Game.is_player_locked():
+			if Input.is_action_just_pressed("inventory"):
+				viewing_inventory = true
+				select_slot(last_selected_slot_index)
+				Game.lock_player()
+	else:
+		if Input.is_action_just_pressed("left"):
+			move_selection(-1,0)
+		elif Input.is_action_just_pressed("right"):
+			move_selection(1,0)
+		elif Input.is_action_just_pressed("up"):
+			move_selection(0,-1)
+		elif Input.is_action_just_pressed("down"):
+			move_selection(0,1)
+		elif Input.is_action_just_pressed("interact"):
+			on_item_selected.emit(selected_slot.item, selected_slot.index)
+		elif Input.is_action_just_pressed("inventory"):
+			on_item_selected.emit(null, -1)
+			
+
+func _on_done_browsing(slot, index):
+	Game.unlock_player()
+	viewing_inventory = false
+	deselect_all_slots()
 
 # Updates the visual for each inventory slot to populate it with the corresponding item
 # If offset is nonzero, it will start from the nth item. Used for pagination
@@ -43,6 +68,7 @@ func update_inventoty_slots() -> void:
 func deselect_all_slots() -> void:
 	if selected_slot:
 		selected_slot.set_highlighted(false)
+		last_selected_slot_index = selected_slot.index
 		selected_slot = null
 
 func select_slot(index:int) -> void:
@@ -61,6 +87,8 @@ func select_slot(index:int) -> void:
 	var slot_index = index - row_offset * INVENTORY_ROW_SIZE
 	selected_slot = inventory_slots[slot_index]
 	selected_slot.set_highlighted(true)
+	
+	on_item_hovered.emit(selected_slot.item, selected_slot.index)
 
 func move_selection(x:int,y:int):
 	if selected_slot:

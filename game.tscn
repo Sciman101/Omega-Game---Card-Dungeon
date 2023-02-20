@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://brty2hwtxpshb"]
 
 [ext_resource type="Texture2D" uid="uid://bmpcdg4f3ksa6" path="res://textures/sky.jpg" id="1_lvkr6"]
-[ext_resource type="PackedScene" path="res://level.tscn" id="1_ryjju"]
+[ext_resource type="PackedScene" uid="uid://nlccyx0mtpdh" path="res://level.tscn" id="1_ryjju"]
 [ext_resource type="PackedScene" uid="uid://d2cadryr2dgt5" path="res://inventory_slot.tscn" id="2_wdcqm"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_x6ylu"]
 [ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="3_xubja"]
@@ -60,6 +60,12 @@ size = Vector2i(464, 224)
 render_target_update_mode = 4
 
 [node name="Level" parent="PlayerView/EnvironmentViewport/SubViewportContainer/SubViewport" instance=ExtResource("1_ryjju")]
+
+[node name="IntractivePopup" type="ColorRect" parent="PlayerView/EnvironmentViewport"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Talksprite" type="Control" parent="PlayerView/EnvironmentViewport"]
 visible = false
@@ -123,6 +129,7 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 size_flags_vertical = 1
 text = "..."
+autowrap_mode = 2
 
 [node name="InventoryGrid" type="GridContainer" parent="HUD/HBoxContainer"]
 layout_mode = 2
@@ -154,8 +161,5 @@ layout_mode = 2
 [node name="InventorySlot8" parent="HUD/HBoxContainer/InventoryGrid" instance=ExtResource("2_wdcqm")]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[connection signal="on_item_hovered" from="HUD/HBoxContainer/InventoryGrid" to="HUD" method="_on_inventory_grid_on_item_hovered"]
+[connection signal="on_item_selected" from="HUD/HBoxContainer/InventoryGrid" to="HUD" method="_on_inventory_grid_on_item_selected"]

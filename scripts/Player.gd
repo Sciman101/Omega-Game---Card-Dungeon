@@ -14,16 +14,16 @@ extends CharacterBody3D
 @onready var camera = $Camera3D
 @onready var ray = $InteractRay
 
+signal in_proximity_to_interactible(other)
 signal interact(other)
 
 var rotation_velocity : float
 var headbob_anim : float
 
-var locked : bool
+var current_interactible
 
 func _ready():
 	Game.player = self
-	Game.lock_player()
 
 func _physics_process(delta):
 	var input_hor = Input.get_axis("left", "right")
@@ -67,10 +67,16 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
+	var interactable = ray.get_collider()
+	if interactable and interactable.is_in_group("Interactible"):
+		if current_interactible != interactable:
+			in_proximity_to_interactible.emit(interactable)
+			current_interactible = interactable
+	elif interactable == null and current_interactible != null:
+		current_interactible = null
+		in_proximity_to_interactible.emit(null)
+	
 	# Interact
 	if Input.is_action_just_pressed("interact"):
-		ray.force_raycast_update()
-		if ray.is_colliding():
-			var target = ray.get_collider()
-			if target.is_in_group("Interactible"):
-				interact.emit(target)
+		if current_interactible:
+			interact.emit(current_interactible)
