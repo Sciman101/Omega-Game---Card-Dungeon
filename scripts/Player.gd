@@ -36,10 +36,7 @@ func _physics_process(delta):
 		velocity.y -= gravity
 	
 	if input_hor != 0:
-		rotate_y((rotation_speed + rotation_accum * rotation_accum) * input_hor * -delta)
-		rotation_accum = min(rotation_accum + delta * 2, 2)
-	else:
-		rotation_accum = 0
+		rotate_y(rotation_speed * input_hor * -delta)
 	
 	if input_vert != 0:
 		headbob_anim += delta * headbob_rate
