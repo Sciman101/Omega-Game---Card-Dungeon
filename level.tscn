@@ -1,10 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://nlccyx0mtpdh"]
+[gd_scene load_steps=15 format=3 uid="uid://cgrakuxku8f66"]
 
 [ext_resource type="Texture2D" uid="uid://b0rt5y04gb217" path="res://textures/brick diffuse.png" id="1_05jv6"]
 [ext_resource type="PackedScene" uid="uid://brw86xdf8mp2r" path="res://house.tscn" id="2_jwrqx"]
 [ext_resource type="Material" uid="uid://dy2o74niyb474" path="res://materials/fence_mat.tres" id="3_fw7hu"]
 [ext_resource type="PackedScene" uid="uid://b40ygy2tnhtjx" path="res://player.tscn" id="4_qfkfe"]
-[ext_resource type="Script" path="res://scripts/npc.gd" id="5_asaev"]
+[ext_resource type="Script" path="res://scripts/npc/npc_dialogue_sequence.gd" id="5_m21u2"]
 [ext_resource type="Texture2D" uid="uid://cwpleguyxbry7" path="res://textures/cyclops.png" id="5_q1fph"]
 [ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="6_hqf3b"]
 
@@ -174,9 +174,9 @@ skeleton = NodePath("../..")
 
 [node name="CyclopsNPC" type="StaticBody3D" parent="." groups=["Interactible", "Npc"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 9)
-script = ExtResource("5_asaev")
+script = ExtResource("5_m21u2")
+messages = PackedStringArray("What are you doing in my house?", "angry: What\'s your problem?")
 talksprite = ExtResource("6_hqf3b")
-dialogue = "What's your problem?"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CyclopsNPC"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30968, 0)
@@ -190,9 +190,10 @@ texture = ExtResource("5_q1fph")
 
 [node name="CyclopsNPC2" type="StaticBody3D" parent="." groups=["Interactible", "Npc"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 9)
-script = ExtResource("5_asaev")
+script = ExtResource("5_m21u2")
+messages = PackedStringArray("Hey, what\'s up?", "I\'ve got a couple dialogue options", "God I love ham")
+loop = true
 talksprite = ExtResource("6_hqf3b")
-dialogue = "You don't look like you're from around here"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CyclopsNPC2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30968, 0)

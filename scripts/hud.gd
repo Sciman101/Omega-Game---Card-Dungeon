@@ -2,7 +2,7 @@ extends MarginContainer
 
 const DEFAULT_TEXT = "..."
 
-@onready var inventory_slots = $HBoxContainer/InventoryGrid.get_children()
+@onready var inventory = $HBoxContainer/InventoryGrid
 @onready var textbox = $HBoxContainer/TextBox
 @onready var talksprite_container = $"../PlayerView/EnvironmentViewport/Talksprite"
 @onready var talksprite = $"../PlayerView/EnvironmentViewport/Talksprite/Talksprite"
@@ -18,7 +18,7 @@ func _ready():
 	else:
 		print("Warning! No player node found!!")
 
-func do_npc_dialogue(npc):
+func do_npc_interaction(npc):
 	interactable_prompt.hide()
 	talksprite_container.visible = true
 	talksprite.sprite_frames = npc.talksprite
@@ -26,9 +26,9 @@ func do_npc_dialogue(npc):
 	
 	Game.lock_player()
 	
-	await textbox.present_text(npc.dialogue)
+	await npc.do_npc_interaction(self)
+	
 	talksprite.stop()
-	talksprite.frame = 0
 	
 	var tree = get_tree()
 	while not Input.is_action_pressed("interact"):
@@ -41,7 +41,7 @@ func do_npc_dialogue(npc):
 
 func _on_player_interact(thing):
 	if thing.is_in_group("Npc"):
-		do_npc_dialogue(thing)
+		await do_npc_interaction(thing)
 
 func _on_inventory_grid_on_item_selected(item, slot_number):
 	textbox.present_text(DEFAULT_TEXT, 0)

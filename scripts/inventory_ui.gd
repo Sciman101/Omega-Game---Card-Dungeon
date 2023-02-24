@@ -17,11 +17,12 @@ signal on_item_selected(item, slot_number)
 signal on_item_hovered(item, slot_number)
 
 func _ready():
-	update_inventoty_slots()
+	set_process_unhandled_input(true)
+	update_inventory_slots()
 	on_item_selected.connect(_on_done_browsing)
 
 # Navigate
-func _input(event):
+func _unhandled_input(event):
 	if not viewing_inventory:
 		if not Game.is_player_locked():
 			if Input.is_action_just_pressed("inventory"):
@@ -41,16 +42,16 @@ func _input(event):
 			on_item_selected.emit(selected_slot.item, selected_slot.index)
 		elif Input.is_action_just_pressed("inventory"):
 			on_item_selected.emit(null, -1)
-			
 
 func _on_done_browsing(slot, index):
+	await get_tree().process_frame
 	Game.unlock_player()
 	viewing_inventory = false
 	deselect_all_slots()
 
 # Updates the visual for each inventory slot to populate it with the corresponding item
 # If offset is nonzero, it will start from the nth item. Used for pagination
-func update_inventoty_slots() -> void:
+func update_inventory_slots() -> void:
 	var inventory = Game.inventory
 	num_rows = ceil(float(inventory.size()) / INVENTORY_ROW_SIZE)
 	
@@ -82,7 +83,7 @@ func select_slot(index:int) -> void:
 	var target_row = floor(index / INVENTORY_ROW_SIZE)
 	if target_row < row_offset or target_row > row_offset + 1:
 		row_offset = min(target_row, row_offset + 1)
-		update_inventoty_slots()
+		update_inventory_slots()
 	
 	var slot_index = index - row_offset * INVENTORY_ROW_SIZE
 	selected_slot = inventory_slots[slot_index]

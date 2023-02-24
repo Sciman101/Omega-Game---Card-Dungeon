@@ -64,4 +64,6 @@ func _physics_process(delta):
 	# Interact
 	if Input.is_action_just_pressed("interact"):
 		if current_interactible:
+			if current_interactible.has_method('on_interact'):
+				current_interactible.on_interact()
 			interact.emit(current_interactible)

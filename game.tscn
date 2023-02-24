@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://brty2hwtxpshb"]
 
 [ext_resource type="Texture2D" uid="uid://bmpcdg4f3ksa6" path="res://textures/sky.jpg" id="1_lvkr6"]
-[ext_resource type="PackedScene" uid="uid://nlccyx0mtpdh" path="res://level.tscn" id="1_ryjju"]
+[ext_resource type="PackedScene" uid="uid://cgrakuxku8f66" path="res://level.tscn" id="1_ryjju"]
 [ext_resource type="PackedScene" uid="uid://d2cadryr2dgt5" path="res://inventory_slot.tscn" id="2_wdcqm"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_x6ylu"]
 [ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="3_xubja"]
@@ -88,7 +88,7 @@ color = Color(0, 0, 0, 0.490196)
 
 [node name="Talksprite" type="AnimatedSprite2D" parent="PlayerView/EnvironmentViewport/Talksprite"]
 texture_filter = 1
-position = Vector2(235, 118)
+position = Vector2(232, 112)
 sprite_frames = ExtResource("3_xubja")
 autoplay = "default"
 

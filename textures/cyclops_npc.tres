@@ -2,22 +2,22 @@
 
 [ext_resource type="Texture2D" uid="uid://cam5ab037q2ne" path="res://textures/cyclops talksprite.png" id="1_v4xeo"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gcxan"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ot6q4"]
 atlas = ExtResource("1_v4xeo")
-region = Rect2(0, 0, 197, 213)
+region = Rect2(0, 0, 464, 224)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bcnjb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_enpch"]
 atlas = ExtResource("1_v4xeo")
-region = Rect2(197, 0, 197, 213)
+region = Rect2(464, 0, 464, 224)
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gcxan")
+"texture": SubResource("AtlasTexture_ot6q4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bcnjb")
+"texture": SubResource("AtlasTexture_enpch")
 }],
 "loop": true,
 "name": &"default",
