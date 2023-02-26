@@ -18,6 +18,11 @@ var Items = {
 var player
 var inventory = [Items.burger, Items.burger, Items.house_key, Items.house_key, Items.house_key, Items.house_key, Items.house_key, Items.house_key, Items.house_key, Items.burger]
 
+func _ready():
+	# Populate items with their id
+	for item_id in Items:
+		Items[item_id].id = item_id
+
 func lock_player():
 	if player: player.set_physics_process(false)
 

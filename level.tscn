@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cgrakuxku8f66"]
+[gd_scene load_steps=16 format=3 uid="uid://cgrakuxku8f66"]
 
 [ext_resource type="Texture2D" uid="uid://b0rt5y04gb217" path="res://textures/brick diffuse.png" id="1_05jv6"]
 [ext_resource type="PackedScene" uid="uid://brw86xdf8mp2r" path="res://house.tscn" id="2_jwrqx"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/npc/npc_dialogue_sequence.gd" id="5_m21u2"]
 [ext_resource type="Texture2D" uid="uid://cwpleguyxbry7" path="res://textures/cyclops.png" id="5_q1fph"]
 [ext_resource type="SpriteFrames" uid="uid://de3tf05qm0wbk" path="res://textures/cyclops_npc.tres" id="6_hqf3b"]
+[ext_resource type="Script" path="res://scripts/npc/npc_wants_item.gd" id="8_ngow3"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_qhfft"]
 size = Vector2(30, 70)
@@ -200,6 +201,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30968, 0)
 shape = SubResource("CapsuleShape3D_sqscq")
 
 [node name="Sprite3D" type="Sprite3D" parent="CyclopsNPC2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+billboard = 2
+texture_filter = 0
+texture = ExtResource("5_q1fph")
+
+[node name="CyclopsNPC3" type="StaticBody3D" parent="." groups=["Interactible", "Npc"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+script = ExtResource("8_ngow3")
+encounter_text = PackedStringArray("God, I\'m so hungry", "I haven\'t eaten anything since a half-cooked chicken burrito 20 years ago...", "Can you give me something to eat?")
+short_encounter_text = PackedStringArray("Gimmie some food, man")
+bad_item_text = PackedStringArray("... I can\'t eat that")
+good_item_text = PackedStringArray("Heeeeeellllllll yeah, burger time - thanks a million dude!!")
+post_encounter_text = PackedStringArray("*Horrible, piglike eating noises*")
+valid_item_ids = PackedStringArray("burger")
+talksprite = ExtResource("6_hqf3b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CyclopsNPC3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.30968, 0)
+shape = SubResource("CapsuleShape3D_sqscq")
+
+[node name="Sprite3D" type="Sprite3D" parent="CyclopsNPC3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
 billboard = 2
 texture_filter = 0

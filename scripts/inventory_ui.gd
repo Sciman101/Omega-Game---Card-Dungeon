@@ -49,6 +49,10 @@ func _on_done_browsing(slot, index):
 	viewing_inventory = false
 	deselect_all_slots()
 
+func start_browsing():
+	viewing_inventory = true
+	select_slot(0)
+
 # Updates the visual for each inventory slot to populate it with the corresponding item
 # If offset is nonzero, it will start from the nth item. Used for pagination
 func update_inventory_slots() -> void:

@@ -1,6 +1,7 @@
 extends StaticBody3D
 
 @export var talksprite : SpriteFrames
+@export var talk_speed : float = 1
 
 func do_npc_interaction(hud): pass
 
@@ -14,4 +15,11 @@ func do_dialogue(hud, text):
 			print('Unknown animation ', animation_name)
 		text = text.substr(idx + 1).strip_edges()
 	
-	await hud.textbox.present_text(text)
+	hud.talksprite.play()
+	await hud.textbox.present_text(text,talk_speed)
+	hud.talksprite.stop()
+
+func do_dialogue_sequence(hud, sequence):
+	for line in sequence:
+		await do_dialogue(hud, line)
+		await hud.wait_for_input()

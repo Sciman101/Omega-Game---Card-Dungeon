@@ -131,7 +131,7 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 size_flags_vertical = 1
 text = "..."
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="InventoryGrid" type="GridContainer" parent="HUD/HBoxContainer"]
 layout_mode = 2

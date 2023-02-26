@@ -30,14 +30,17 @@ func do_npc_interaction(npc):
 	
 	talksprite.stop()
 	
-	var tree = get_tree()
-	while not Input.is_action_pressed("interact"):
-		await tree.process_frame
+	await wait_for_input()
 	
 	talksprite_container.visible = false
 	textbox.present_text(DEFAULT_TEXT, 0)
 	Game.unlock_player()
 	interactable_prompt.show()
+
+func wait_for_input():
+	var tree = get_tree()
+	while not Input.is_action_pressed("interact"):
+		await tree.process_frame
 
 func _on_player_interact(thing):
 	if thing.is_in_group("Npc"):
