@@ -23,13 +23,7 @@ func _ready():
 
 # Navigate
 func _unhandled_input(event):
-	if not viewing_inventory:
-		if not Game.is_player_locked():
-			if Input.is_action_just_pressed("inventory"):
-				viewing_inventory = true
-				select_slot(last_selected_slot_index)
-				Game.lock_player()
-	else:
+	if viewing_inventory:
 		if Input.is_action_just_pressed("left"):
 			move_selection(-1,0)
 		elif Input.is_action_just_pressed("right"):
@@ -45,7 +39,6 @@ func _unhandled_input(event):
 
 func _on_done_browsing(slot, index):
 	await get_tree().process_frame
-	Game.unlock_player()
 	viewing_inventory = false
 	deselect_all_slots()
 

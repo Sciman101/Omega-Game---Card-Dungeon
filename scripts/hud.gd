@@ -9,12 +9,14 @@ const DEFAULT_TEXT = "..."
 @onready var interactable_prompt = $"../PlayerView/EnvironmentViewport/IntractivePopup"
 
 var player
+var browsing_inventory_casually := false
 
 func _ready():
 	await get_tree().process_frame
 	if Game.player:
 		Game.player.interact.connect(_on_player_interact)
 		Game.player.in_proximity_to_interactible.connect(_show_hide_interactive_prompt)
+		Game.player.view_inventory.connect(_view_player_inventory)
 	else:
 		print("Warning! No player node found!!")
 
@@ -46,8 +48,15 @@ func _on_player_interact(thing):
 	if thing.is_in_group("Npc"):
 		await do_npc_interaction(thing)
 
+func _view_player_inventory():
+	inventory.start_browsing()
+	Game.lock_player()
+	browsing_inventory_casually = true
+
 func _on_inventory_grid_on_item_selected(item, slot_number):
-	textbox.present_text(DEFAULT_TEXT, 0)
+	if browsing_inventory_casually:
+		textbox.present_text(DEFAULT_TEXT, 0)
+		Game.unlock_player()
 
 func _on_inventory_grid_on_item_hovered(item, slot_number):
 	if item:

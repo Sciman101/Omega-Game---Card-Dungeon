@@ -14,6 +14,7 @@ extends CharacterBody3D
 
 signal in_proximity_to_interactible(other)
 signal interact(other)
+signal view_inventory
 
 var rotation_accum : float
 var headbob_anim : float
@@ -60,6 +61,9 @@ func _physics_process(delta):
 	elif interactable == null and current_interactible != null:
 		current_interactible = null
 		in_proximity_to_interactible.emit(null)
+	
+	if Input.is_action_just_pressed("inventory"):
+		view_inventory.emit()
 	
 	# Interact
 	if Input.is_action_just_pressed("interact"):
